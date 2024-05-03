@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qubit/presentation/splash/splash.dart';
+import 'package:qubit/presentation/auth/login/login.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       title: 'Qubit',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
-      home: const SplashScreen(),
+      home: const LoginScreen(),
     );
   }
 }
