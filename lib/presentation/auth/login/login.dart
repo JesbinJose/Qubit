@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:qubit/presentation/auth/login/widgets/create_account_button.dart';
+import 'package:qubit/presentation/auth/sign_up/sign_up.dart';
+import 'package:qubit/presentation/auth/widgets/note_and_button_widget.dart';
 import 'package:qubit/presentation/auth/login/widgets/google_and_login_button.dart';
 import 'package:qubit/presentation/auth/widgets/custom_text_field.dart';
-import 'package:qubit/presentation/constants/validation_constants.dart';
+import 'package:qubit/constants/validation_constants.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -34,24 +35,30 @@ class _LoginScreenState extends State<LoginScreen> {
                   CustomTextFromField(
                     hintText: 'Email',
                     controller: _email,
-                    validator: _emailValidation,
+                    validator: emailValidation,
                   ),
                   CustomTextFromField(
                     hintText: 'Password',
                     controller: _password,
                     obscureText: true,
-                    validator: _passwordValidation,
+                    validator: passwordValidation,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   GoogleAndLoginButton(
                     formKey: _formKey,
+                    email: _email,
+                    password: _password,
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  const CreateAccountButton(),
+                  const CustomNoteWithTextButton(
+                    widget: SignUpScreen(),
+                    note: 'Don\'t have an account',
+                    button: 'create account',
+                  ),
                 ],
               ),
             ),
@@ -59,21 +66,5 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
-  }
-
-  String? _passwordValidation(String? p0) {
-    if (p0 == null || p0.isEmpty) return 'Email is mandatory';
-    if (p0.length < 6) {
-      return "Password must be at least 6 characters long";
-    }
-    return null;
-  }
-
-  String? _emailValidation(String? p0) {
-    if (p0 == null || p0.isEmpty) return 'Email is mandatory';
-    if (!RegExp(emailValidationRegEx).hasMatch(p0)) {
-      return 'Please enter a valid email';
-    }
-    return null;
   }
 }
