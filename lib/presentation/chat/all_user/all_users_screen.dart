@@ -10,6 +10,13 @@ class AllUsersScreen extends StatefulWidget {
 class _AllUsersScreenState extends State<AllUsersScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+      body: Row(
+        children: [
+          Column(),
+          Container(),
+        ],
+      ),
+    );
   }
 }
