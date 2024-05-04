@@ -54,6 +54,7 @@ dependencies:
   #load assets
   svg_flutter: ^0.0.1
   jwt_decoder: ^2.0.1
+  debounce_flutter: ^0.0.2
 
 dev_dependencies:
   flutter_test:

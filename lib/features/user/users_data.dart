@@ -7,7 +7,7 @@ import 'package:qubit/model/user.dart';
 import 'package:qubit/presentation/auth/login/login.dart';
 
 class UserData {
-  Future<UserModel?> getCurrentUserData() async {
+  Future<List<UserModel>?> getCurrentUserData() async {
     if (apiKey.isEmpty) {
       Get.off(const LoginScreen());
       return null;
@@ -20,7 +20,37 @@ class UserData {
           headers: {'Authorization': 'Bearer $apiKey'},
         ),
       );
-      return UserModel.fromJson(resp.data);
+      currentUser = UserModel.fromJson(resp.data);
+      final connectionList = resp.data['connections'] as List;
+      return List.generate(
+        connectionList.length,
+        (index) => UserModel.fromJson(
+          connectionList[index],
+        ),
+      );
+    }
+  }
+
+  Future<List<UserModel>?> searchUsers(String query) async {
+    if (query.isEmpty) return null;
+    if (apiKey.isEmpty) {
+      Get.off(const LoginScreen());
+      return null;
+    } else {
+      final Dio dio = Dio();
+      final Response resp = await dio.get(
+        '$baseUrl$searchUserEndpoint?search=$query',
+        options: Options(
+          headers: {'Authorization': 'Bearer $apiKey'},
+        ),
+      );
+      final connectionList = resp.data as List;
+      return List.generate(
+        connectionList.length,
+        (index) => UserModel.fromJson(
+          connectionList[index],
+        ),
+      );
     }
   }
 }

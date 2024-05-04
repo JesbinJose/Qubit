@@ -8,14 +8,17 @@ class Responsive {
     required Widget? la,
   }) {
     final size = MediaQuery.of(context).size;
-    if (size.width > 700 && la != null) {
+    if (size.width > 800 && la != null) {
       return la;
-    } else if (size.width > 500 && me != null) {
+    } else if (size.width > 600 && me != null) {
       return me;
     } else if (sm != null) {
       return sm;
     } else {
       return const SizedBox();
     }
+  }
+  static bool isMobile(BuildContext context){
+    return MediaQuery.of(context).size.width < 600;
   }
 }
