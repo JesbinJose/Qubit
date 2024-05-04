@@ -1,7 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:get/route_manager.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:qubit/cache.dart';
 import 'package:qubit/constants/endpoints.dart';
+import 'package:qubit/features/local_data/save_credentials.dart';
 import 'package:qubit/keys.dart';
+import 'package:qubit/presentation/auth/login/login.dart';
 import 'package:qubit/presentation/widgets/snakbar.dart';
 
 class AuthUsingGoogle {
@@ -10,9 +14,7 @@ class AuthUsingGoogle {
       clientId: googleAuthWebClientId,
     );
     final googleUser = await googleSignIn.signIn();
-    print('object');
     final googleAuth = await googleUser!.authentication;
-    print('object');
     return (googleAuth.accessToken, googleUser.email);
   }
 
@@ -29,6 +31,16 @@ class AuthUsingGoogle {
     } catch (e) {
       showCustomSnakbar('Somthing Went wrong', e.toString());
       return null;
+    }
+  }
+   Future<bool> logout() async {
+    try {
+      LocalDatabase().remove();
+      apiKey = '';
+      Get.off(const LoginScreen());
+      return true;
+    } catch (e) {
+      return false;
     }
   }
 }

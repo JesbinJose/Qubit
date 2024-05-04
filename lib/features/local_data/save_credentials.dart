@@ -17,4 +17,8 @@ class LocalDatabase {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('key');
   }
+  Future<bool> remove() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    return await prefs.remove('key');
+  }
 }

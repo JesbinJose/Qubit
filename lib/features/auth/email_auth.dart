@@ -1,6 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/route_manager.dart';
+import 'package:qubit/cache.dart';
 import 'package:qubit/constants/endpoints.dart';
+import 'package:qubit/features/local_data/save_credentials.dart';
+import 'package:qubit/presentation/auth/login/login.dart';
 import 'package:qubit/presentation/widgets/snakbar.dart';
 
 class EmailAuth {
@@ -66,6 +70,17 @@ class EmailAuth {
     } catch (e) {
       showCustomSnakbar('Somthing Went wrong', e.toString());
       debugPrint('General error during signup: $e');
+      return false;
+    }
+  }
+
+  Future<bool> logout() async {
+    try {
+      LocalDatabase().remove();
+      apiKey = '';
+      Get.off(const LoginScreen());
+      return true;
+    } catch (e) {
       return false;
     }
   }
