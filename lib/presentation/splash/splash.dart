@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qubit/cache.dart';
 import 'package:qubit/features/local_data/save_credentials.dart';
+import 'package:qubit/features/user/users_data.dart';
 import 'package:qubit/presentation/auth/login/login.dart';
 import 'package:qubit/presentation/chat/all_user/all_users_screen.dart';
 
@@ -22,6 +23,7 @@ class SplashScreen extends StatelessWidget {
     final String? data = await LocalDatabase().getData();
     if (data != null && data.isNotEmpty) {
       apiKey = data;
+      currentUser = await UserData().getCurrentUserData();
       Get.off(const AllUsersScreen());
     } else {
       Get.off(const LoginScreen());

@@ -4,6 +4,7 @@ import 'package:qubit/cache.dart';
 import 'package:qubit/features/auth/email_auth.dart';
 import 'package:qubit/features/auth/google_auth.dart';
 import 'package:qubit/features/local_data/save_credentials.dart';
+import 'package:qubit/features/user/users_data.dart';
 import 'package:qubit/presentation/auth/widgets/custom_auth_button.dart';
 import 'package:qubit/presentation/chat/all_user/all_users_screen.dart';
 import 'package:qubit/presentation/widgets/snakbar.dart';
@@ -59,6 +60,7 @@ class GoogleAndLoginButton extends StatelessWidget {
     if (key != null) {
       LocalDatabase().saveData(key);
       apiKey = key;
+      currentUser = await UserData().getCurrentUserData();
       Get.off(const AllUsersScreen());
     } else {
       debugPrint('Something went wrong');
@@ -76,6 +78,7 @@ class GoogleAndLoginButton extends StatelessWidget {
     if (key != null) {
       LocalDatabase().saveData(key);
       apiKey = key;
+      currentUser = await UserData().getCurrentUserData();
       Get.off(const AllUsersScreen());
     }
     showCustomSnakbar('Login Successful', '');
