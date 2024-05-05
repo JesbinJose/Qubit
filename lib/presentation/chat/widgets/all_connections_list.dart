@@ -1,7 +1,7 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qubit/state/chat/chats_bloc.dart';
+import 'package:qubit/state/message/message_cubit.dart';
 
 class AllConnectionsList extends StatelessWidget {
   const AllConnectionsList({
@@ -27,6 +27,12 @@ class AllConnectionsList extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               child: ListTile(
+                onTap: () {
+                  context.read<MessageCubit>().changeSelectedUser(
+                        state.connections[index],
+                      );
+                  Scaffold.of(context).closeDrawer();
+                },
                 title: Text(
                   username,
                 ),

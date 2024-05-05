@@ -3,6 +3,7 @@ import 'package:get/route_manager.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:qubit/cache.dart';
 import 'package:qubit/constants/endpoints.dart';
+import 'package:qubit/model/message.dart';
 import 'package:qubit/model/user.dart';
 import 'package:qubit/presentation/auth/login/login.dart';
 
@@ -48,6 +49,29 @@ class UserData {
       return List.generate(
         connectionList.length,
         (index) => UserModel.fromJson(
+          connectionList[index],
+        ),
+      );
+    }
+  }
+
+  Future<List<Message>?> getPreviousMessages(int id) async {
+    if (apiKey.isEmpty) {
+      Get.off(const LoginScreen());
+      return null;
+    } else {
+      final Dio dio = Dio();
+      final userId = JwtDecoder.decode(apiKey)['user_id'];
+      final Response resp = await dio.get(
+        '$baseUrl$getPreviosChatsEndpoint$id/$userId/',
+        options: Options(
+          headers: {'Authorization': 'Bearer $apiKey'},
+        ),
+      );
+      final connectionList = resp.data as List;
+      return List.generate(
+        connectionList.length,
+        (index) => Message.fromJson(
           connectionList[index],
         ),
       );
