@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qubit/presentation/chat/widgets/message_part.dart';
+import 'package:qubit/presentation/chat/widgets/message_text_field_bar.dart';
 import 'package:qubit/responsive.dart';
 import 'package:qubit/state/message/message_cubit.dart';
 
@@ -17,7 +17,8 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _message = TextEditingController();
 
-  final ScrollController _scrollController = ScrollController(initialScrollOffset: -10000);
+  final ScrollController _scrollController =
+      ScrollController(initialScrollOffset: -10000);
 
   @override
   Widget build(BuildContext context) {
@@ -48,27 +49,7 @@ class _ChatScreenState extends State<ChatScreen> {
               scrollController: _scrollController,
             ),
           ),
-          Container(
-            width: double.infinity,
-            height: 60,
-            color: Colors.black12,
-            child: TextField(
-              controller: _message,
-              onSubmitted: (_) =>
-                  context.read<MessageCubit>().sendMessage(_message.text),
-              textInputAction: TextInputAction.send,
-              autofocus: true,
-              decoration: InputDecoration(
-                hintText: 'Type a message...',
-                suffixIcon: IconButton(
-                    icon: const Icon(Icons.send),
-                    tooltip: 'Send',
-                    onPressed: () {
-                      context.read<MessageCubit>().sendMessage(_message.text);
-                    }),
-              ),
-            ),
-          ),
+          MessageTextFieldBar(message: _message),
         ],
       ),
     );

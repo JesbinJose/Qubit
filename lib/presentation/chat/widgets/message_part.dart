@@ -29,7 +29,7 @@ class MessagesPart extends StatelessWidget {
               separatorBuilder: (context, index) => const SizedBox(height: 5,),
               itemBuilder: (context, index) {
                 final message = state.messages[index];
-                bool isuser = message.id == currentUser!.userId;
+                bool isuser = message.id != currentUser!.userId;
                 return Transform.rotate(
                   angle: pi,
                   child: Align(

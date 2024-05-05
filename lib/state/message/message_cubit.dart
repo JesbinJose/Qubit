@@ -20,10 +20,19 @@ class MessageCubit extends Cubit<MessageState> {
         await UserData().getPreviousMessages(toUser.userId);
     if (messages == null) return;
     connect(currentUser!.userId.toString(), toUser.userId.toString());
-    emit(MessageUpdated(messages: messages, username: toUser.username));
+    emit(MessageUpdated(
+      messages: messages,
+      username: toUser.username,
+      email: toUser.email,
+    ));
   }
 
   void connect(String senderId, String receiverId) {
+    //checking any error
+    dynamic fn(Object o, StackTrace s) {
+      debugPrint(o.toString());
+    }
+
     try {
       final url = Uri.parse(
           'wss://backendrealchat.molla.cloud/chat/$senderId/?$receiverId');
@@ -33,17 +42,22 @@ class MessageCubit extends Cubit<MessageState> {
         emit(
           MessageUpdated(
             username: state.username,
+            email: state.email,
             messages: [...state.messages, newMessage],
           ),
         );
-      });
+      }).onError(fn);
     } catch (e) {
       debugPrint('Error: $e');
     }
   }
 
-  void sendMessage(String message) async {
+  void sendMessage(String message, String tomail) async {
     if (_channel == null) return;
-    _channel!.sink.add(jsonEncode({'message': message}));
+    _channel!.sink.add(jsonEncode({
+      'message': message,
+      'senderUsername': tomail,
+      'recieverUsername': currentUser!.email,
+    }));
   }
 }

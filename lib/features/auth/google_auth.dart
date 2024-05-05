@@ -33,7 +33,8 @@ class AuthUsingGoogle {
       return null;
     }
   }
-   Future<bool> logout() async {
+
+  Future<bool> logout() async {
     try {
       LocalDatabase().remove();
       apiKey = '';

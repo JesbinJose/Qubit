@@ -29,7 +29,7 @@ class AllUsersScreen extends StatelessWidget {
             visible: !Responsive.isMobile(context),
             child: const ConnectedUsersPart(),
           ),
-          ChatScreen(),
+          const ChatScreen(),
         ],
       ),
     );
