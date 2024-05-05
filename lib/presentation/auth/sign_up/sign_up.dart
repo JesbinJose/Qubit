@@ -15,12 +15,94 @@ class SignUpScreen extends StatefulWidget {
   State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
+class _SignUpScreenState extends State<SignUpScreen>
+    with SingleTickerProviderStateMixin {
   final TextEditingController _email = TextEditingController();
   final TextEditingController _userName = TextEditingController();
   final TextEditingController _password = TextEditingController();
   final TextEditingController _confirmPassword = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey();
+
+  late AnimationController _animationController;
+  late Animation<Offset> _emailSlideAnimation;
+  late Animation<Offset> _userNameSlideAnimation;
+  late Animation<Offset> _passwordSlideAnimation;
+  late Animation<Offset> _confirmPasswordSlideAnimation;
+  late Animation<Offset> _buttonSlideAnimation;
+  late Animation<Offset> _noteSlideAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1000),
+    );
+
+    _emailSlideAnimation = Tween<Offset>(
+      begin: const Offset(0, -10),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(0.0, 0.4, curve: Curves.easeInOut),
+      ),
+    );
+
+    _userNameSlideAnimation = Tween<Offset>(
+      begin: const Offset(0, -10),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(0.1, 0.5, curve: Curves.easeInOut),
+      ),
+    );
+
+    _passwordSlideAnimation = Tween<Offset>(
+      begin: const Offset(0, -10),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(0.2, 0.6, curve: Curves.easeInOut),
+      ),
+    );
+
+    _confirmPasswordSlideAnimation = Tween<Offset>(
+      begin: const Offset(0, -10),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(0.3, 0.7, curve: Curves.easeInOut),
+      ),
+    );
+
+    _buttonSlideAnimation = Tween<Offset>(
+      begin: const Offset(10, 0),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(0.4, 0.8, curve: Curves.easeInOut),
+      ),
+    );
+
+    _noteSlideAnimation = Tween<Offset>(
+      begin: const Offset(0, 10),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: _animationController,
+        curve: const Interval(0.6, 1.0, curve: Curves.easeInOut),
+      ),
+    );
+
+    _animationController.forward();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,47 +119,64 @@ class _SignUpScreenState extends State<SignUpScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CustomTextFromField(
-                    hintText: 'Email',
-                    controller: _email,
-                    validator: emailValidation,
+                  SlideTransition(
+                    position: _emailSlideAnimation,
+                    child: CustomTextFromField(
+                      hintText: 'Email',
+                      controller: _email,
+                      validator: emailValidation,
+                    ),
                   ),
-                  CustomTextFromField(
-                    hintText: 'User Name',
-                    controller: _userName,
-                    validator: userNameValidation,
+                  SlideTransition(
+                    position: _userNameSlideAnimation,
+                    child: CustomTextFromField(
+                      hintText: 'User Name',
+                      controller: _userName,
+                      validator: userNameValidation,
+                    ),
                   ),
-                  CustomTextFromField(
-                    hintText: 'Password',
-                    controller: _password,
-                    obscureText: true,
-                    validator: passwordValidation,
+                  SlideTransition(
+                    position: _passwordSlideAnimation,
+                    child: CustomTextFromField(
+                      hintText: 'Password',
+                      controller: _password,
+                      obscureText: true,
+                      validator: passwordValidation,
+                    ),
                   ),
-                  CustomTextFromField(
-                    hintText: 'Confirm Password',
-                    controller: _confirmPassword,
-                    obscureText: true,
-                    validator: (p0) => confirmPasswordValidation(
-                      p0,
-                      _password.text,
+                  SlideTransition(
+                    position: _confirmPasswordSlideAnimation,
+                    child: CustomTextFromField(
+                      hintText: 'Confirm Password',
+                      controller: _confirmPassword,
+                      obscureText: true,
+                      validator: (p0) => confirmPasswordValidation(
+                        p0,
+                        _password.text,
+                      ),
                     ),
                   ),
                   const SizedBox(height: 20),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CustomAuthButton(
-                        onTap: _createAccount,
-                        widget: const Text('Create account'),
+                      SlideTransition(
+                        position: _buttonSlideAnimation,
+                        child: CustomAuthButton(
+                          onTap: _createAccount,
+                          widget: const Text('Create account'),
+                        ),
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  const CustomNoteWithTextButton(
-                    widget: LoginScreen(),
-                    note: 'Already have an account',
-                    button: 'Sign in',
+                  const SizedBox(height: 20),
+                  SlideTransition(
+                    position: _noteSlideAnimation,
+                    child: const CustomNoteWithTextButton(
+                      widget: LoginScreen(),
+                      note: 'Already have an account',
+                      button: 'Sign in',
+                    ),
                   ),
                 ],
               ),
@@ -98,10 +197,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
     if (isAccountCreated == true) {
       showCustomSnakbar(
-        "Verifiation email has sent",
-        "Please check mails at ${_email.text}. and Verfy it so you can login to you account .Please check spam also it may be there",
+        "Verification email has been sent",
+        "Please check your email at ${_email.text} and verify it to log in. Please also check your spam folder.",
       );
-      Get.off(const LoginScreen());
+      Get.off(
+        const LoginScreen(),
+        transition: Transition.fadeIn,
+        duration: const Duration(
+          milliseconds: 500,
+        ),
+      );
+    }else{
+      showCustomSnakbar(
+        "Somthing went wrong",
+        "Maybe account already regestered try login",
+      );
     }
+  }
+
+  @override
+  void dispose() async {
+    super.dispose();
+    _animationController.reverse();
+    await Future.delayed(const Duration(seconds: 1));
+    _animationController.dispose();
   }
 }

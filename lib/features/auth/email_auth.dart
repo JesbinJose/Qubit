@@ -1,11 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/route_manager.dart';
-import 'package:qubit/cache.dart';
+import 'package:qubit/utils/cache.dart';
 import 'package:qubit/constants/endpoints.dart';
 import 'package:qubit/features/local_data/save_credentials.dart';
 import 'package:qubit/presentation/auth/login/login.dart';
-import 'package:qubit/presentation/widgets/snakbar.dart';
 
 class EmailAuth {
   Future<String?> signinWithEmailAndPassword({
@@ -22,7 +21,6 @@ class EmailAuth {
       );
       return resp.data['access'];
     } catch (e) {
-      showCustomSnakbar('Somthing Went wrong', e.toString());
       return null;
     }
   }
@@ -56,7 +54,6 @@ class EmailAuth {
         return false;
       }
     } on DioException catch (e) {
-      showCustomSnakbar('Somthing Went wrong', e.toString());
       switch (e.type) {
         case DioExceptionType.connectionTimeout:
         case DioExceptionType.sendTimeout:
@@ -68,7 +65,6 @@ class EmailAuth {
           return false;
       }
     } catch (e) {
-      showCustomSnakbar('Somthing Went wrong', e.toString());
       debugPrint('General error during signup: $e');
       return false;
     }

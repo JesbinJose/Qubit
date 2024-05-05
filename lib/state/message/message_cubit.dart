@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:qubit/cache.dart';
+import 'package:qubit/utils/cache.dart';
 import 'package:qubit/features/user/users_data.dart';
 import 'package:qubit/model/message.dart';
 import 'package:qubit/model/user.dart';

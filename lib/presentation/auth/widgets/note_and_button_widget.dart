@@ -26,7 +26,13 @@ class CustomNoteWithTextButton extends StatelessWidget {
             ),
           ),
           onPressed: () {
-            Get.off(widget);
+            Get.off(
+              widget,
+              transition: Transition.fadeIn,
+              duration: const Duration(
+                milliseconds: 500,
+              ),
+            );
           },
           child: Text(
             button,

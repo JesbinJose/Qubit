@@ -14,19 +14,16 @@ class MessageTextFieldBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<MessageCubit, MessageState>(
       builder: (context, state) {
-        if (state.username?.isNotEmpty != true) return const SizedBox();
+        if (state.username?.isNotEmpty != true) {
+          return const SizedBox();
+        }
         return Container(
+          margin: const EdgeInsets.only(top: 10),
           width: double.infinity,
           height: 60,
           color: Colors.black12,
           child: TextField(
             controller: _message,
-            onSubmitted: (_) {
-              context
-                  .read<MessageCubit>()
-                  .sendMessage(_message.text, state.email!);
-              _message.clear();
-            },
             textInputAction: TextInputAction.send,
             autofocus: true,
             decoration: InputDecoration(

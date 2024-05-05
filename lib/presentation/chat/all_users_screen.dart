@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qubit/presentation/chat/widgets/chat_screen.dart';
-import 'package:qubit/responsive.dart';
+import 'package:qubit/utils/responsive.dart';
 import 'package:qubit/state/message/message_cubit.dart';
 
 import 'widgets/connected_users_part.dart';

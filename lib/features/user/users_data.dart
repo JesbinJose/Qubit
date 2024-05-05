@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get/route_manager.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
-import 'package:qubit/cache.dart';
+import 'package:qubit/utils/cache.dart';
 import 'package:qubit/constants/endpoints.dart';
 import 'package:qubit/model/message.dart';
 import 'package:qubit/model/user.dart';

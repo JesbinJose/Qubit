@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qubit/cache.dart';
+import 'package:qubit/utils/cache.dart';
 import 'package:qubit/features/auth/google_auth.dart';
 
 class CustomAppBar extends StatelessWidget {

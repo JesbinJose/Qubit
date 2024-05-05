@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qubit/state/chat/chats_bloc.dart';
 import 'package:qubit/state/message/message_cubit.dart';
+import 'package:qubit/utils/cache.dart';
 
 class AllConnectionsList extends StatelessWidget {
   const AllConnectionsList({
@@ -19,6 +20,9 @@ class AllConnectionsList extends StatelessWidget {
           shrinkWrap: true,
           itemBuilder: (context, index) {
             final String username = state.connections[index].username;
+            if (state.connections[index].userId == currentUser?.userId) {
+              return const SizedBox();
+            }
             return Container(
               margin: const EdgeInsets.symmetric(vertical: 5),
               padding: const EdgeInsets.symmetric(vertical: 5),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:qubit/presentation/chat/widgets/message_part.dart';
 import 'package:qubit/presentation/chat/widgets/message_text_field_bar.dart';
-import 'package:qubit/responsive.dart';
+import 'package:qubit/utils/responsive.dart';
 import 'package:qubit/state/message/message_cubit.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -18,7 +18,7 @@ class _ChatScreenState extends State<ChatScreen> {
   final TextEditingController _message = TextEditingController();
 
   final ScrollController _scrollController =
-      ScrollController(initialScrollOffset: -10000);
+      ScrollController();
 
   @override
   Widget build(BuildContext context) {
