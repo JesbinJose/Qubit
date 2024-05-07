@@ -4,11 +4,11 @@ import 'package:get/get.dart';
 class CustomNoteWithTextButton extends StatelessWidget {
   const CustomNoteWithTextButton({
     super.key,
-    required this.widget,
+    required this.route,
     required this.note,
     required this.button,
   });
-  final Widget widget;
+  final String route;
   final String note;
   final String button;
 
@@ -26,13 +26,7 @@ class CustomNoteWithTextButton extends StatelessWidget {
             ),
           ),
           onPressed: () {
-            Get.off(
-              widget,
-              transition: Transition.fadeIn,
-              duration: const Duration(
-                milliseconds: 500,
-              ),
-            );
+            Get.offNamed(route);
           },
           child: Text(
             button,

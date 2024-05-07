@@ -19,6 +19,6 @@ class Responsive {
     }
   }
   static bool isMobile(BuildContext context){
-    return MediaQuery.of(context).size.width < 600;
+    return MediaQuery.of(context).size.width < 500;
   }
 }

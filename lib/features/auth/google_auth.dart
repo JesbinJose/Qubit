@@ -5,7 +5,6 @@ import 'package:qubit/utils/cache.dart';
 import 'package:qubit/constants/endpoints.dart';
 import 'package:qubit/features/local_data/save_credentials.dart';
 import 'package:qubit/keys.dart';
-import 'package:qubit/presentation/auth/login/login.dart';
 
 class AuthUsingGoogle {
   Future<(String?, String)> loginWithGoogle() async {
@@ -36,7 +35,7 @@ class AuthUsingGoogle {
     try {
       LocalDatabase().remove();
       apiKey = '';
-      Get.off(const LoginScreen());
+      Get.offNamed('/login');
       return true;
     } catch (e) {
       return false;

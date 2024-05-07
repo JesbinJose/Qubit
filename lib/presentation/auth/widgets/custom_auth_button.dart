@@ -14,7 +14,9 @@ class CustomAuthButton extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        constraints: const BoxConstraints(minWidth: 220,maxHeight: double.infinity),
+        constraints: BoxConstraints(
+          minWidth: MediaQuery.sizeOf(context).width * .9
+        ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
           border: Border.all(),

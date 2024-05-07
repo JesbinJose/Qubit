@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:qubit/features/auth/email_auth.dart';
-import 'package:qubit/presentation/auth/login/login.dart';
 import 'package:qubit/presentation/auth/widgets/custom_auth_button.dart';
 import 'package:qubit/presentation/auth/widgets/custom_text_field.dart';
 import 'package:qubit/presentation/auth/widgets/note_and_button_widget.dart';
@@ -157,23 +156,18 @@ class _SignUpScreenState extends State<SignUpScreen>
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SlideTransition(
-                        position: _buttonSlideAnimation,
-                        child: CustomAuthButton(
-                          onTap: _createAccount,
-                          widget: const Text('Create account'),
-                        ),
-                      ),
-                    ],
+                  SlideTransition(
+                    position: _buttonSlideAnimation,
+                    child: CustomAuthButton(
+                      onTap: _createAccount,
+                      widget: const Text('Create account'),
+                    ),
                   ),
                   const SizedBox(height: 20),
                   SlideTransition(
                     position: _noteSlideAnimation,
                     child: const CustomNoteWithTextButton(
-                      widget: LoginScreen(),
+                      route: '/login',
                       note: 'Already have an account',
                       button: 'Sign in',
                     ),
@@ -200,14 +194,8 @@ class _SignUpScreenState extends State<SignUpScreen>
         "Verification email has been sent",
         "Please check your email at ${_email.text} and verify it to log in. Please also check your spam folder.",
       );
-      Get.off(
-        const LoginScreen(),
-        transition: Transition.fadeIn,
-        duration: const Duration(
-          milliseconds: 500,
-        ),
-      );
-    }else{
+      Get.offNamed('/login');
+    } else {
       showCustomSnakbar(
         "Somthing went wrong",
         "Maybe account already regestered try login",

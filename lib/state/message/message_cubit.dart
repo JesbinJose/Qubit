@@ -39,13 +39,15 @@ class MessageCubit extends Cubit<MessageState> {
       _channel = WebSocketChannel.connect(url);
       _channel!.stream.listen((message) {
         final newMessage = Message.fromJson(jsonDecode(message)['messages']);
-        emit(
+        if(state.messages.last.messageid!=newMessage.messageid) {
+          emit(
           MessageUpdated(
             username: state.username,
             email: state.email,
             messages: [...state.messages, newMessage],
           ),
         );
+        }
       }).onError(fn);
     } catch (e) {
       debugPrint('Error: $e');
@@ -59,5 +61,19 @@ class MessageCubit extends Cubit<MessageState> {
       'senderUsername': tomail,
       'recieverUsername': currentUser!.email,
     }));
+  }
+
+  void clear() {
+    _channel?.sink.close();
+    currentUser = null;
+    apiKey = '';
+    connections = [];
+    emit(
+      MessageUpdated(
+        messages: [],
+        username: '',
+        email: '',
+      ),
+    );
   }
 }

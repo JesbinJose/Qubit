@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qubit/presentation/auth/sign_up/sign_up.dart';
 import 'package:qubit/presentation/auth/widgets/note_and_button_widget.dart';
 import 'package:qubit/presentation/auth/login/widgets/google_and_login_button.dart';
 import 'package:qubit/presentation/auth/widgets/custom_text_field.dart';
@@ -116,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen>
                   SlideTransition(
                     position: _noteSlideAnimation,
                     child: const CustomNoteWithTextButton(
-                      widget: SignUpScreen(),
+                      route: '/signup',
                       note: 'Don\'t have an account',
                       button: 'create account',
                     ),

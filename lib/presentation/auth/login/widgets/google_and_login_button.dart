@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:qubit/utils/cache.dart';
 import 'package:qubit/features/auth/email_auth.dart';
@@ -66,8 +68,7 @@ class _GoogleAndLoginButtonState extends State<GoogleAndLoginButton>
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
       children: [
         SlideTransition(
           position: _loginButtonAnimation,
@@ -76,14 +77,13 @@ class _GoogleAndLoginButtonState extends State<GoogleAndLoginButton>
             widget: const Text("Login"),
           ),
         ),
-        const SizedBox(
-          width: 20,
-        ),
+        const SizedBox(height: 10,),
         SlideTransition(
           position: _googleButtonAnimation,
           child: CustomAuthButton(
             onTap: _loginWithGoogle,
             widget: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(
                   width: 45,
